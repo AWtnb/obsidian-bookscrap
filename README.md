@@ -36,7 +36,13 @@ Copy over `main.js`, `styles.css`, `manifest.json` to `(VaultFolder)/.obsidian/p
 Run below command in Vault root directory.
 
 ```PowerShell
-$n="obsidian-yonda";$repo="https://github.com/AWtnb/$n.git";$p=".obsidian"|Join-Path -ChildPath "plugins";if (-not(Test-Path $p -PathType Container)){New-Item -Path $p -ItemType Directory}Push-Location $p;git clone $repo; cd $n;if (Get-Command code -ErrorAction SilentlyContinue){code .};Pop-Location
+$n="obsidian-yonda";$repo="https://github.com/AWtnb/$n.git";$p=".obsidian"|Join-Path -ChildPath "plugins";if (-not(Test-Path $p -PathType Container)){New-Item -Path $p -ItemType Directory};Push-Location $p;git clone $repo; cd $n;if (Get-Command code -ErrorAction SilentlyContinue){code .};Pop-Location
+```
+
+With [ghq](https://github.com/x-motemen/ghq):
+
+```PowerShell
+ghq get "https://github.com/AWtnb/obsidian-yonda" --silent|sv src;$p=".obsidian"|Join-Path -ChildPath "plugins";if (-not(Test-Path $p -PathType Container)){New-Item -Path $p -ItemType Directory};Push-Location $p;New-Item -Name (gi $src).Name -Value $src -ItemType Junction -Confirm -Force; Pop-Location; code $src
 ```
 
 Afterwords, run `npm i` and `npm run dev`.
